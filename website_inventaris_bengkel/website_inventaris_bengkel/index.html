@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventaris Bengkel TI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">⚙</span><div><strong>INVENTARIS</strong><small>BENGKEL TI</small></div></div>
+    <nav>
+      <a class="nav-link active" href="#dashboard" data-page="dashboard">▦ <span>Dashboard</span></a>
+      <a class="nav-link" href="#alat" data-page="alat">▣ <span>Data Alat</span></a>
+      <a class="nav-link" href="#peminjaman" data-page="peminjaman">⇄ <span>Peminjaman</span></a>
+      <a class="nav-link" href="#riwayat" data-page="riwayat">◷ <span>Riwayat</span></a>
+    </nav>
+    <div class="sidebar-note"><b>Pranata Laboratorium</b><p>Kelola alat bengkel dengan lebih mudah, cepat, dan tertib.</p></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><p class="eyebrow">SISTEM INFORMASI BENGKEL</p><h1 id="pageTitle">Dashboard</h1></div>
+      <div class="user-chip"><span class="avatar">PL</span><div><b>Admin Bengkel</b><small>Pranata Laboratorium</small></div></div>
+    </header>
+
+    <section id="dashboardPage" class="page active">
+      <div class="welcome">
+        <div><p class="eyebrow light">PANEL KONTROL</p><h2>Selamat datang di Inventaris Bengkel TI</h2><p>Pantau ketersediaan alat dan status peminjaman dalam satu tempat.</p></div>
+        <div class="welcome-mark">⌘</div>
+      </div>
+      <div class="stats">
+        <article class="stat-card"><span class="stat-icon blue">▣</span><div><p>Total Jenis Alat</p><strong id="statTools">0</strong><small>Jenis inventaris</small></div></article>
+        <article class="stat-card"><span class="stat-icon green">✓</span><div><p>Alat Tersedia</p><strong id="statAvailable">0</strong><small>Siap dipinjam</small></div></article>
+        <article class="stat-card"><span class="stat-icon orange">⇄</span><div><p>Sedang Dipinjam</p><strong id="statBorrowed">0</strong><small>Belum dikembalikan</small></div></article>
+        <article class="stat-card"><span class="stat-icon red">!</span><div><p>Terlambat</p><strong id="statLate">0</strong><small>Lewat batas kembali</small></div></article>
+      </div>
+      <div class="panel">
+        <div class="panel-heading"><div><h3>Peminjaman Aktif</h3><p>Daftar alat yang masih berada pada peminjam.</p></div><button class="btn primary" data-go="peminjaman">+ Catat Peminjaman</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Nama Peminjam</th><th>Alat</th><th>Jumlah</th><th>Tanggal Pinjam</th><th>Batas Kembali</th><th>Status</th></tr></thead><tbody id="dashboardLoans"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="alatPage" class="page">
+      <div class="page-intro"><div><h2>Data Alat</h2><p>Tambah, ubah, dan pantau jumlah inventaris bengkel.</p></div><button class="btn primary" id="addToolBtn">+ Tambah Alat</button></div>
+      <div class="toolbar"><input id="toolSearch" type="search" placeholder="Cari nama atau kode alat..."><select id="toolCategory"><option value="">Semua kategori</option><option>Alat Ukur</option><option>Perkakas</option><option>Komputer</option><option>Jaringan</option></select></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>Kode</th><th>Nama Alat</th><th>Kategori</th><th>Total</th><th>Dipinjam</th><th>Tersedia</th><th>Aksi</th></tr></thead><tbody id="toolsTable"></tbody></table></div></div>
+    </section>
+
+    <section id="peminjamanPage" class="page">
+      <div class="page-intro"><div><h2>Catat Peminjaman</h2><p>Isi data peminjam dan alat yang akan digunakan.</p></div></div>
+      <div class="form-panel">
+        <form id="loanForm">
+          <div class="form-grid">
+            <label>Nama peminjam<input id="borrower" required placeholder="Contoh: Andi Pratama"></label>
+            <label>Kelas / Unit<input id="unit" required placeholder="Contoh: XI RPL 1"></label>
+            <label>Pilih alat<select id="loanTool" required></select></label>
+            <label>Jumlah<input id="loanQty" type="number" min="1" value="1" required></label>
+            <label>Tanggal pinjam<input id="loanDate" type="date" required></label>
+            <label>Batas pengembalian<input id="dueDate" type="date" required></label>
+            <label class="full">Keperluan<textarea id="purpose" rows="3" placeholder="Contoh: Praktik pengukuran tegangan"></textarea></label>
+          </div>
+          <button class="btn primary" type="submit">Simpan Peminjaman</button>
+          <p class="form-hint">Jumlah alat tersedia akan berkurang otomatis setelah peminjaman disimpan.</p>
+        </form>
+      </div>
+      <div class="panel"><div class="panel-heading"><div><h3>Daftar Peminjaman Aktif</h3><p>Gunakan tombol kembalikan setelah alat diterima.</p></div></div><div class="table-wrap"><table><thead><tr><th>Peminjam</th><th>Unit</th><th>Alat</th><th>Jumlah</th><th>Tanggal</th><th>Batas Kembali</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="loansTable"></tbody></table></div></div>
+    </section>
+
+    <section id="riwayatPage" class="page">
+      <div class="page-intro"><div><h2>Riwayat Peminjaman</h2><p>Catatan transaksi peminjaman dan pengembalian alat.</p></div></div>
+      <div class="toolbar"><input id="historySearch" type="search" placeholder="Cari nama peminjam atau alat..."></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>Peminjam</th><th>Alat</th><th>Jumlah</th><th>Tanggal Pinjam</th><th>Tanggal Kembali</th><th>Status</th></tr></thead><tbody id="historyTable"></tbody></table></div></div>
+    </section>
+    <footer>© 2026 Sistem Inventaris Bengkel TI · Data tersimpan pada browser perangkat ini.</footer>
+  </main>
+
+  <dialog id="toolDialog">
+    <form id="toolForm" method="dialog">
+      <div class="dialog-head"><div><h3 id="dialogTitle">Tambah Alat</h3><p>Lengkapi informasi inventaris.</p></div><button type="button" class="close" id="closeDialog">×</button></div>
+      <input type="hidden" id="editToolId">
+      <label>Kode alat<input id="toolCode" required placeholder="Contoh: ALT-004"></label>
+      <label>Nama alat<input id="toolName" required placeholder="Contoh: Multimeter Digital"></label>
+      <label>Kategori<select id="toolCat" required><option>Alat Ukur</option><option>Perkakas</option><option>Komputer</option><option>Jaringan</option></select></label>
+      <label>Jumlah total<input id="toolTotal" type="number" min="1" required></label>
+      <div class="dialog-actions"><button type="button" class="btn secondary" id="cancelDialog">Batal</button><button class="btn primary" type="submit">Simpan</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
